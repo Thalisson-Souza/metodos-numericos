@@ -6,7 +6,7 @@ double f(double x){
     return (x * x ) - 2;
 }
 
-double derivada(double x){
+double f_derivada(double x){
     return 2 * x;
 }
 
@@ -21,7 +21,7 @@ int main(){
 
     do{
         i++;
-        xn[i] = xn[i - 1] -  f(xn[i - 1]) / derivada(xn[i - 1]);
+        xn[i] = xn[i - 1] -  f(xn[i - 1]) / f_derivada(xn[i - 1]);
         printf("iteracao %d: x%d = %.5f\n", i, i, xn[i]);
 
         fXn = f(xn[i]);
