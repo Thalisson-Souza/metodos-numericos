@@ -2,24 +2,24 @@
 #include <stdbool.h>
 #include <math.h>
 
-float fX(float x){
+double fX(double x){
     return (x * x) - 2;
 }
 
-float pontoMedio(float a, float b){
+double pontoMedio(double a, double b){
     return (a + b) / 2;
 }
 
 
 int main(){
-    float a = 0;
-    float b = 3;
-    float tolerancia = 0.05;
+    double a = 0;
+    double b = 3;
+    double tolerancia = 0.05;
     
-    float fA;
-    float fB;
-    float fPm;
-    float pontoMedioAtual;
+    double fA;
+    double fB;
+    double fPm;
+    double pontoMedioAtual;
 
     printf("Inicio: a = %.0f  b = %.0f\n", a, b);
     pontoMedioAtual = pontoMedio(a, b);
@@ -43,12 +43,10 @@ int main(){
                 break; 
             } else if(fA * fPm < 0){
                 printf("Escolhendo subintervalo: [a, Pm]\n");
-                a = a;
                 b = pontoMedioAtual;
             } else{
                 printf("Escolhendo subintervalo: [Pm, b]\n");
                 a = pontoMedioAtual;
-                b = b;
             }
         }
     }while(fabs(fX(pontoMedioAtual)) > tolerancia);
