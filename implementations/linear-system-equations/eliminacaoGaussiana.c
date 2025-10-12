@@ -33,6 +33,27 @@ void gaussJordan(double matrizAumentada[N][N + 1]){
     }
 }
 
+
+void resolucaoDoSistema(double matrizAumentada[N][N+1]){
+    double x[N];
+    x[N - 1] = matrizAumentada[N - 1][N] / matrizAumentada[N - 1][N - 1];
+
+    for(int i = N - 2; i >= 0; i--){
+        int resultado = 0;
+
+        for(int j = i + 1; j < N; j++){
+            resultado += x[j] * matrizAumentada[i][j];   // ∑ de j=i+1 até N  ->  Xj * Aij
+        }   
+
+        x[i] = ( matrizAumentada[i][N] - resultado ) / matrizAumentada[i][i];
+    }
+
+    printf("Solucao para x1, x2, x3 eh:\n");
+    for(int k = 0; k < N; k++){
+        printf("x[%d] = %.0f\n", k + 1, x[k]);
+    }
+}
+
 void montarMatrizAumentada(double matrizAxb[N][N+1], double matrizA[N][N], int vetorB[N]){
     for(int i = 0; i <  N; i++){
         for (int j = 0; j < N; j++){
@@ -45,12 +66,13 @@ void montarMatrizAumentada(double matrizAxb[N][N+1], double matrizA[N][N], int v
 int main(){
 
     double matrizA[N][N] = {
-        {3, 2, 4}, 
-        {1, 1, 2},
-        {4, 3, -2}
-    };
+    {3, 2, 4},
+    {1, 1, 2},
+    {4, 3, -2}
+};
 
     int vetorB[N] = { 1, 2, 3};
+
     double matrizAumentada[N][N + 1];
 
     printf("Matriz A:\n");
@@ -69,6 +91,8 @@ int main(){
 
     printf("Matriz Aumentada apos eliminacao Gauss:\n");
     printMatriz(N, N + 1, matrizAumentada);
+
+    resolucaoDoSistema(matrizAumentada);
 
     return 0;
 }
