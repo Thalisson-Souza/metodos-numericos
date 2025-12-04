@@ -1,7 +1,10 @@
 #ifndef GAUSS_H
 #define GAUSS_H
 
-void gauss(int n, double matrizAumentada[n][n+1]);
-void resolucaoDoSistema(int n, double matrizAumentada[n][n+1]);
+#define MAX 10
+
+void trocaLinha(double A[][MAX], int linha1, int linha2, int n);
+void gauss(int n, double A[][MAX]);
+void resolucaoDoSistema(int n, double A[][MAX]);
 
 #endif

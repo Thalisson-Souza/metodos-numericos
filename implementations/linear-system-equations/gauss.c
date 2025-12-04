@@ -1,18 +1,42 @@
 #include <stdio.h>
+#include <math.h>
 
-void gauss(int n, double matrizAumentadaA[n][n + 1]){
+#define MAX 10
+
+void trocaLinha(double A[][MAX], int linha1, int linha2, int n) {  //chamada quando o pivo == 0 
+    for (int k = 0; k < n + 1; k++) {
+        double temp = A[linha1][k]; // guarda temporariamente o valor da posição (linha 1, coluna k)
+        A[linha1][k] = A[linha2][k];  // copia o valor da linha 2 para a linha 1
+        A[linha2][k] = temp; // copia o valor antigo da linha 1 (que ta na variavel temp) direto para linha 2   
+    }
+}
+
+void gauss(int n, double A[][MAX]){
     for(int colunaJ = 0; colunaJ < n - 1; colunaJ++){
+
+        // pivoteamento (troca de linhas com pivo == 0)
+        if(A[colunaJ][colunaJ] == 0){
+            for(int i = colunaJ + 1; i < n; i++){
+                if(A[i][colunaJ] != 0){
+                    printf("\nTROCA: L%d <-> L%d (pivo zero)\n", colunaJ, i);
+                    trocaLinha(A, colunaJ, i, n);
+                    break;
+                }
+            }
+        }
+
+        // parte da eliminação
         for(int linhaI = colunaJ + 1; linhaI < n; linhaI++){
-            if(matrizAumentadaA[linhaI][colunaJ] != 0){ // ver se elemento é zero
+            if(A[linhaI][colunaJ] != 0){ // ver se elemento é zero
                 printf("\n");
                 if(linhaI != colunaJ){ // não pode ser elemento da diagonal
                     
-                double multiplicador = matrizAumentadaA[linhaI][colunaJ] / matrizAumentadaA[colunaJ][colunaJ];
+                double multiplicador = A[linhaI][colunaJ] / A[colunaJ][colunaJ];
                 printf("multiplicador da linha m[%d][%d] = %.2f\n", linhaI, colunaJ, multiplicador);
 
                     for(int k = 0; k < n + 1; k++){
                         printf("operacao: l[%d] <-> l[%d] - %.2f (multiplicador) * l[%d]\n", linhaI, linhaI, multiplicador, colunaJ );
-                        matrizAumentadaA[linhaI][k] = matrizAumentadaA[linhaI][k] - ( multiplicador * matrizAumentadaA[colunaJ][k] );
+                        A[linhaI][k] = A[linhaI][k] - ( multiplicador * A[colunaJ][k] );
                     }
                 }
             }
@@ -21,22 +45,22 @@ void gauss(int n, double matrizAumentadaA[n][n + 1]){
 }
 
 
-void resolucaoDoSistema(int n, double matrizAumentadaA[n][n+1]){
+void resolucaoDoSistema(int n, double A[][MAX]){
     double x[n];
-    x[n - 1] = matrizAumentadaA[n - 1][n] / matrizAumentadaA[n - 1][n - 1];
+    x[n - 1] = A[n - 1][n] / A[n - 1][n - 1];
 
     for(int i = n - 2; i >= 0; i--){
-        int resultado = 0;
+        double resultado = 0.0;
 
         for(int j = i + 1; j < n; j++){
-            resultado += x[j] * matrizAumentadaA[i][j];   // ∑ de j=i+1 até N  ->  Xj * Aij
+            resultado += x[j] * A[i][j];   // ∑ de j=i+1 até N  ->  Xj * Aij
         }   
 
-        x[i] = ( matrizAumentadaA[i][n] - resultado ) / matrizAumentadaA[i][i];
+        x[i] = ( A[i][n] - resultado ) / A[i][i];
     }
 
     printf("Solucao para x1, x2, x3 eh:\n");
     for(int k = 0; k < n; k++){
-        printf("x[%d] = %.0f\n", k + 1, x[k]);
+        printf("x[%d] = %.2f\n", k + 1, x[k]);
     }
 }
