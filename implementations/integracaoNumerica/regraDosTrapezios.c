@@ -37,6 +37,6 @@ int main(){
     
     double resposta = regraDosTrapezio(a, b, h, n);
     
-    printf("\nresultado da aproximacao da integral resultou em: %.5f\n", resposta);
+    printf("\nresultado da aproximacao da integral resultou em: %.12f\n", resposta);
 
 }
