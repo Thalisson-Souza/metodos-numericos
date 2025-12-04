@@ -13,7 +13,7 @@ void printMatriz(int linhas, int colunas, double matrizAumentada[linhas][colunas
     printf("\n");
 }
 
-void gaussJordan(double matrizAumentada[N][N + 1]){
+void gauss(double matrizAumentada[N][N + 1]){
     for(int colunaJ = 0; colunaJ < N - 1; colunaJ++){
         for(int linhaI = colunaJ + 1; linhaI < N; linhaI++){
             if(matrizAumentada[linhaI][colunaJ] != 0){ // ver se elemento é zero
@@ -39,7 +39,7 @@ void resolucaoDoSistema(double matrizAumentada[N][N+1]){
     x[N - 1] = matrizAumentada[N - 1][N] / matrizAumentada[N - 1][N - 1];
 
     for(int i = N - 2; i >= 0; i--){
-        int resultado = 0;
+        double resultado = 0.0;
 
         for(int j = i + 1; j < N; j++){
             resultado += x[j] * matrizAumentada[i][j];   // ∑ de j=i+1 até N  ->  Xj * Aij
@@ -85,7 +85,7 @@ int main(){
 
     montarMatrizAumentada(matrizAumentada, matrizA, vetorB);
 
-    gaussJordan(matrizAumentada);
+    gauss(matrizAumentada);
 
     printf("\n");
 
