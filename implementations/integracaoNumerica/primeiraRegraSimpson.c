@@ -5,7 +5,6 @@ double funcao(double x){
     return x * x;
 }
 
-
 double simpson13(double a, double b, double h, int n){
     double soma = funcao(a) + funcao(b);
     double xi;

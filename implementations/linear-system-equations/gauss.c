@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MAX 10
+#define MAX 100
 
-void trocaLinha(double A[][MAX], int linha1, int linha2, int n) {  //chamada quando o pivo == 0 
+void trocaLinha(double A[][MAX + 1], int linha1, int linha2, int n) {  //chamada quando o pivo == 0 
     for (int k = 0; k < n + 1; k++) {
         double temp = A[linha1][k]; // guarda temporariamente o valor da posição (linha 1, coluna k)
         A[linha1][k] = A[linha2][k];  // copia o valor da linha 2 para a linha 1
@@ -11,7 +11,7 @@ void trocaLinha(double A[][MAX], int linha1, int linha2, int n) {  //chamada qua
     }
 }
 
-void gauss(int n, double A[][MAX]){
+void gauss(int n, double A[][MAX + 1]){
     for(int colunaJ = 0; colunaJ < n - 1; colunaJ++){
 
         // pivoteamento (troca de linhas com pivo == 0)
@@ -45,18 +45,18 @@ void gauss(int n, double A[][MAX]){
 }
 
 
-void resolucaoDoSistema(int n, double A[][MAX]){
+void resolucaoDoSistema(int n, double A[][MAX + 1]){
     double x[n];
-    x[n - 1] = A[n - 1][n] / A[n - 1][n - 1];
+    x[n - 1] = A[n - 1][n] / A[n - 1][n - 1];   // calcula a ultima linha por que só tem uma variavel
 
     for(int i = n - 2; i >= 0; i--){
-        double resultado = 0.0;
+        double resultado = 0.0;   // soma os termos da linha i
 
-        for(int j = i + 1; j < n; j++){
+        for(int j = i + 1; j < n; j++){  // soma os produtos ja calculados pelos itens da linha
             resultado += x[j] * A[i][j];   // ∑ de j=i+1 até N  ->  Xj * Aij
         }   
 
-        x[i] = ( A[i][n] - resultado ) / A[i][i];
+        x[i] = ( A[i][n] - resultado ) / A[i][i];  // isolar x[i] da equação, x[i] = (b - soma dos outros termos) / coeficiente da diagonal
     }
 
     printf("Solucao para x1, x2, x3 eh:\n");
