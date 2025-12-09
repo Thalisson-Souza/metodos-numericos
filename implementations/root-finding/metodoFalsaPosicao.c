@@ -21,11 +21,19 @@ double XnfalsaPosicao(double a, double b){
     return x1;
 }
 
+bool bolzano(double a, double b){
+    return f(a) * f(b) < 0;
+}
 
 int main(){
-    double a = 1.41;
+    double a = 2;
     double b = 3;
     double epson = 0.001;
+
+    if(!bolzano(a, b)){
+        printf("intervalo deu ruim ai!, f(a) e f(b) tem mesmo sinal!");
+        return 0;
+    }
 
     double x, fX, fA, fB;
     int iteracoes = 0;
@@ -45,9 +53,11 @@ int main(){
             printf("Raiz exata da f(x) = x^2 - 2 = 0, (sqrt(2)) = %.6f\n", sqrt(2));
             printf("Erro absoluto = %.6f\n", fabs(x - sqrt(2)));
             break;
-        }if(fA * fX < 0){
+        }
+        
+        if(fA * fX < 0){
             b = x;
-        }else if(fX * fB < 0){
+        }else {
             a = x;
         }
     }while(fabs(b - a) > epson);
